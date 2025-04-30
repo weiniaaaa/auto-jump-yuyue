@@ -1,36 +1,28 @@
+
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>跳转中...</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>预约跳转页面</title>
   <script>
-    // 模拟设置 cookie
-    document.cookie = "openId=oLDlqs0bIkRwAo15bWrJL_3c774c; path=/";
-    document.cookie = "phoneMD5=3600b0d11b385d90016f6a71619c19d3; path=/";
-    document.cookie = "username=18802975033; path=/";
-    document.cookie = "mobile=18802975033; path=/";
-    document.cookie = "token=eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IjE4ODAyOTc1MDMzIiwiZXhwIjoxNzQ1MzcwNTczMDEwLCJ1c2VySWQiOjE5Mzk1OTF9.p5Y-2xm19VkPd0-2_ep3xP-erUoD6Buv6l-AfJuESuc; path=/";
-    document.cookie = "newuserId=2067364; path=/";
-    document.cookie = "nickname=18154330941; path=/";
+    window.onload = function () {
+      // 从 cookie 中读取参数
+      const token = document.cookie.match(/token=([^;]+)/)?.[1];
+      const openId = document.cookie.match(/openId=([^;]+)/)?.[1];
+      const sheduid = new URLSearchParams(location.search).get("sheduid") || "67864";
+      const hdid = new URLSearchParams(location.search).get("hdid") || "22";
 
-    // 读取参数
-    const params = new URLSearchParams(window.location.search);
-    const sheduid = params.get("sheduid") || "67863";
-    const tt = params.get("tt") || "2025-04-22 13:00";
-    const titlejc = params.get("titlejc") || "自动跳转预约页面";
-
-    // 设置预约所需 cookie
-    document.cookie = `tt=${encodeURIComponent(tt)}; path=/`;
-    document.cookie = `titlejc=${encodeURIComponent(titlejc)}; path=/`;
-    document.cookie = `sheduid=${sheduid}; path=/`;
-
-    // 跳转到预约人页面
-    setTimeout(() => {
-      location.href = "https://weixin.snhm.org.cn/ziran_wei_html/xuanze_peo.html";
-    }, 800);
+      if (token && openId) {
+        const target = `https://weixin.snhm.org.cn/ziran_wei_html/yuyue_ju.html?hdid=${hdid}&openid=${openId}`;
+        window.location.href = target;
+      } else {
+        document.body.innerHTML = "<h2>⚠️ 未检测到登录信息，请先通过微信访问官网登录后再点击此链接。</h2>";
+      }
+    };
   </script>
 </head>
 <body>
-  <p>正在跳转到预约页面...</p>
+  <p>加载中，请稍候...</p>
 </body>
 </html>
